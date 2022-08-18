@@ -1,0 +1,84 @@
+/* 笔记:Java梁勇， 第九章， 对象和类
+ * 1, 使用new操作符调用构造方法创建对象。 构造方法和类同名， 没有返回值类型， 由new操作符调用， 可以重载。
+ * 2, 通过引用变量访问对象. 类是程序员定义的类型。 类是引用类型。 对象是通过引用变量来访问的。 
+ *	例如： Circle myCircle = new Circle(); 定义一个引用变量 myCircle， 创建一个Circle对象， 把这个对象的
+ * 	引用赋值给引用变量 myCircle. 
+ * 3, '.'操作符访问对象数据和方法。 myCircle.radius;myCircle.getArea();
+ * 4, Java 给数据域中的变量赋默认值。 引用类型数据域（例如 String）的默认值是null， 数值型数据域的默认值是0， boolean
+ * 	类型的数据域的默认值是false， Char类型数据域的默认值是‘、u0000’. Java没有给方法中的局部变量赋值。
+ * 5, 静态变量被类中的所有对象共享。在实例变量先加上修饰符 Static 就变为静态变量。 例如： Static int numberOfObjects；
+ * 	静态变量值存储在一个公共的内存地址。
+ * 6， 实例变量和实例方法必须在创建对象后通过对象调用。 静态变量和方法可以在不创建对象的情况下通过类名调用。
+ * 7， 对象储存在堆中。
+ * 8， 不可变对象和类： 所有数据域私有， 没有对数据域提供公共的设置方法， 没有返回指向数据域的应用的访问器方法。
+ * 9， 类变量的作用域是整个类。 局部变量和类变量同名时， 局部变量优先， 类变量隐藏。
+ * 10， this是一个对象可以用来引用自身的引用名。使用this引用数据域作为设置方法或构造方法的参数。例如： 采用this.radius
+ *	在方法中引用数据域名字。 用ClassName.staticvariable来引用隐藏的静态变量。 
+ * 11, 使用关键字this调用同一个类的另一个构造方法。 
+
+*** Day 2: Practive Rectangle
+
+*/
+
+public class Rectangle {
+	private double  width, length;
+	private static int numberOfObjects = 0;
+
+	Rectangle (double width, double length) {
+		this.width = (int) width; //关键字this调用了数据域中的变量
+		this.length = length;
+		numberOfObjects ++;
+	}
+	
+	Rectangle () {
+		this(1,1); //关键字this调用了上一个构造方法
+	}
+
+	public double getLength(){
+		return length;
+	}
+
+	public double getWidth(){
+		return width;
+	}
+	
+	public double getArea(){
+		return length * width;
+	}
+
+	public double getPremeter(){
+		return 2 * (width + length);
+	}
+
+	public void setlength (double length){
+		this.length = length;
+	}
+	
+	public void setWidth (double width){
+		this.width = width;
+	}
+
+	public static int getNumberOfObjects (){
+		return numberOfObjects;
+	}
+
+	public void printRec (Rectangle rec){
+		System.out.println("rec" + getNumberOfObjects() + ":\n");
+		System.out.println("lenght: " + rec.getLength() +"\n");
+		System.out.println("width: " + rec.getWidth() + "\n");
+		System.out.println("area: "+ rec.getArea() + "\n");
+		System.out.println("premeter: " + rec.getPremeter() + "\n");
+
+	}
+
+
+	public static void main(String[] args){
+		System.out.println("There are " + Rectangle.getNumberOfObjects() + " Rectangle objects. \n");
+		Rectangle rec1 = new Rectangle();
+		System.out.println("There are " + getNumberOfObjects() + " Rectangle objects.\n");
+		rec1.printRec(rec1);
+		Rectangle rec2 = new Rectangle(5,5);
+		System.out.println("There are " + getNumberOfObjects() + " Rectangle objects.\n");
+		rec2.printRec(rec2);
+	}
+}
